@@ -1,3 +1,5 @@
+import aplicables.Desceunto;
+import aplicables.Packaging;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +13,8 @@ public class TestVarios {
     ProductoSimple guante;
     Combo comboSimple;
     Combo comboDoble;
+    Desceunto desceuntoFijo;
+    Packaging packaging;
 
     @BeforeEach
     public void init(){
@@ -19,6 +23,10 @@ public class TestVarios {
         this.comboSimple = new Combo();
         this.comboDoble = new Combo();
         comboSimple.agregarProductos(casco,guante);
+
+        this.desceuntoFijo = new Desceunto(comboSimple,50);
+        this.packaging = new Packaging(comboSimple, 100);
+
 
     }
 
@@ -37,4 +45,27 @@ public class TestVarios {
         Assertions.assertEquals(2,comboSimple.stock());
 
     }
+    @Test
+    @DisplayName("Prueba de precio de un combo aplicandole un desceunto fijo")
+    public void testPrecioComobo350(){
+
+        Assertions.assertEquals(350, desceuntoFijo.precio());
+    }
+    @Test
+    @DisplayName("Prueba de precio de un combo sumandole un packaging")
+    public void testPrecioCombo500(){
+        Assertions.assertEquals(500, packaging.precio());
+    }
+
+    @Test
+    @DisplayName("Prueba de descuanto sobre descuento sobre un producto")
+    public void tetsDePrecioSobreProductoConDescuento260(){
+
+        Desceunto descuentoFijoSobreProducto = new Desceunto(casco , 20);
+        Desceunto descuentoFijoSobreProducto2 = new Desceunto(descuentoFijoSobreProducto,20);
+
+        Assertions.assertEquals(260, descuentoFijoSobreProducto2.precio());
+
+    }
+
 }
